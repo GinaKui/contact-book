@@ -11,7 +11,9 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
-  "keywords": ["contact book"],
+  "keywords": [
+    "contact book"
+  ],
   "author": {
     "name": "Gina Kui",
     "email": "developerkui@outlook.com"
@@ -22,6 +24,7 @@
     "config": "^3.2.2",
     "express": "^4.17.1",
     "express-validator": "^6.2.0",
+    "helmet": "^3.21.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.13"
   },
