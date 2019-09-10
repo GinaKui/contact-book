@@ -1,5 +1,4 @@
 const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -8,6 +7,7 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 
+const router = express.Router();
 // @route     GET api/auth
 // @desc      Get logged in user
 // @access    Private
@@ -39,7 +39,9 @@ router.post(
     const { email, password } = req.body;
     try {
       let user = await User.findOne({ email });
+      //user does not exist
       if (!user) return res.status(400).json({ msg: 'Invalid Credentials' });
+      //user and password do not match
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res.status(401).json({ msg: 'Invalid Credentials' });
