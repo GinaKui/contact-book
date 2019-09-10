@@ -5,10 +5,13 @@ const auth = require('../middleware/auth');
 const Contact = require('../models/Contact');
 
 const router = express.Router();
+//all contacts routes require authentication
+router.use(auth);
+
 // @route     GET api/contacts
 // @desc      Read all users contacts
 // @access    Private
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const contacts = await Contact.find({ user: req.user.id }).sort({
       date: -1
@@ -26,12 +29,9 @@ router.get('/', auth, async (req, res) => {
 router.post(
   '/',
   [
-    auth,
-    [
-      check('name', 'Name is required')
-        .not()
-        .isEmpty()
-    ]
+    check('name', 'Name is required')
+      .not()
+      .isEmpty()
   ],
   async (req, res) => {
     //check errors from validation
@@ -62,7 +62,7 @@ router.post(
 // @route     PUT api/contacts/:id
 // @desc      Update contact
 // @access    Private
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { name, email, phone, type } = req.body;
   // Build contact object
   const contactFields = {};
@@ -93,7 +93,7 @@ router.put('/:id', auth, async (req, res) => {
 // @route     DELETE api/contacts/:id
 // @desc      Delete contact
 // @access    Private
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     let contact = await Contact.findById(req.params.id);
     if (!contact) return res.status(404).json({ msg: 'Contact not found' });
