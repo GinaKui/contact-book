@@ -40,13 +40,13 @@ router.post(
     try {
       let user = await User.findOne({ email });
       //user does not exist
-      if (!user) return res.status(400).json({ msg: 'Invalid Credentials' });
+      if (!user) return res.status(400).json({ msg: 'Invalid email' });
       //user and password do not match
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(401).json({ msg: 'Invalid Credentials' });
+        return res.status(401).json({ msg: 'Email and password do not match' });
       }
-
+      //send JWT back to user
       const payload = {
         user: {
           id: user.id
@@ -56,7 +56,7 @@ router.post(
         payload,
         config.get('jwtSecret'),
         {
-          expiresIn: 360000
+          expiresIn: config.get('jwtLife')
         },
         (err, token) => {
           if (err) throw err;
