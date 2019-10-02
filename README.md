@@ -30,11 +30,36 @@ npm run server  # Express API Only :5000
 npm run client  # React Client Only :3000
 ```
 
-## API end point
+## JSON API end point
 `/api/auth` GET # return user info for valid token  
 `/api/auth` POST # login a user, if success, return a token  
 `/api/user` POST # register a user   
 `/api/contacts` GET # all contacts. valid token required  
 `/api/contacts` POST # new contact. valid token required  
 `/api/contacts/:id` PUT # update contact. valid token required  
-`/api/contacts/:id` DELETE # delete contact. valid token required  
+`/api/contacts/:id` DELETE # delete contact. valid token required
+
+### send token in the http request header
+```http
+"x-auth-token": "JWT.token.string"
+```
+
+### user schema
+```json
+{
+  "name": "Micheal Smith",
+  "email": "micheal@xyz.com",
+  "password": "sixormorechars"
+}
+```
+
+### contact schema
+```json
+{
+  "_id":"",
+  "name": "required",
+  "email": "",
+  "phone": "",
+  "type": "personal"
+}
+```
