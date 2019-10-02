@@ -1,6 +1,6 @@
 {
   "name": "contact-book-client",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "engines": {
     "node": "10.15.3"
@@ -13,6 +13,10 @@
     "react-scripts": "^3.1.2",
     "react-transition-group": "^4.3.0",
     "uuid": "^3.3.3"
+  },
+  "author": {
+    "name": "Gina Kui",
+    "email": "developerkui@outlook.com"
   },
   "scripts": {
     "start": "react-scripts start",
