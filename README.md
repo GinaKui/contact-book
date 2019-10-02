@@ -1,8 +1,8 @@
 # Contact Book
 
-keep personal contact information.
-Full stack app built by RESTful api in JSON.
-React, Node.js, Express, MongoDB
+keep personal contact information.  
+Full stack app built by RESTful api in JSON.  
+React, Node.js, Express, MongoDB  
 User authentication implemented by JWT token.
 
 deployed at [Heroku](https://contact-book-mern.herokuapp.com/login)
