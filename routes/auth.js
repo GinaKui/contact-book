@@ -8,6 +8,7 @@ const User = require('../models/User');
 const auth = require('../middleware/auth');
 
 const router = express.Router();
+
 // @route     GET api/auth
 // @desc      Get logged in user
 // @access    Private
@@ -22,7 +23,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @route     POST api/auth
-// @desc      Auth user & get token
+// @desc      Login user & return a token
 // @access    Public
 router.post(
   '/',
@@ -40,11 +41,11 @@ router.post(
     try {
       let user = await User.findOne({ email });
       //user does not exist
-      if (!user) return res.status(400).json({ msg: 'Invalid email' });
+      if (!user) return res.status(400).json({ msg: 'invalid email' });
       //user and password do not match
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(401).json({ msg: 'Email and password do not match' });
+        return res.status(401).json({ msg: 'email and password do not match' });
       }
       //send JWT back to user
       const payload = {

@@ -1,5 +1,5 @@
 # Contact Book
-------
+
 keep personal contact information after user authentication using JWT token.
 
 ## Usage
@@ -31,10 +31,10 @@ npm run client  # React Client Only :3000
 ```
 
 ## API end point
-/api/auth GET # return a token if logged in already  
-/api/auth POST # login a user, if success, return a token  
-/api/user POST # register a user   
-/api/contacts GET # all contacts. valid token required  
-/api/contacts POST # new contact. valid token required  
-/api/contacts/:id PUT # update contact. valid token required  
-/api/contacts/:id DELETE # delete contact. valid token required  
+`/api/auth` GET # return user info for valid token  
+`/api/auth` POST # login a user, if success, return a token  
+`/api/user` POST # register a user   
+`/api/contacts` GET # all contacts. valid token required  
+`/api/contacts` POST # new contact. valid token required  
+`/api/contacts/:id` PUT # update contact. valid token required  
+`/api/contacts/:id` DELETE # delete contact. valid token required  
