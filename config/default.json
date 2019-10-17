@@ -1,5 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://user-contact:khbfzkjhdb@sandbox-7mgdy.mongodb.net/contactbook?retryWrites=true&w=majority",
-  "jwtSecret": "rgjkfneriuhwgjksfndm",
-  "jwtLife": 360000
-}
