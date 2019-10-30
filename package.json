@@ -24,15 +24,15 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "config": "^3.2.3",
+    "config": "^3.2.4",
     "express": "^4.17.1",
     "express-validator": "^6.2.0",
-    "helmet": "^3.21.1",
+    "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.7.4"
+    "mongoose": "^5.7.7"
   },
   "devDependencies": {
     "concurrently": "^4.1.2",
-    "nodemon": "^1.19.3"
+    "nodemon": "^1.19.4"
   }
 }
