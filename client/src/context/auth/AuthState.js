@@ -28,6 +28,9 @@ const AuthState = props => {
 
   // Load User
   const loadUser = async () => {
+    /**
+     * @todo axios token action
+     */
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
