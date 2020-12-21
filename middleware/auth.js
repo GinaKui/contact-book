@@ -8,12 +8,9 @@ module.exports = (req, res, next) => {
    * @todo could use Authentication: Bearer <token> schema
    */
   const token = req.get('x-auth-token');
-  if (!token) {
-    return res.status(401).json({ msg: "Token doesn't exist, authorization denied" });
-  }
   jwt.verify(token, jwtSecret, (err, decoded) => {
-    if(err) {
-      return res.status(401).json({ msg: err });
+    if (err) {
+      return res.status(401).json({err: {name: err.name, msg: err.message} });
     } else {
       req.user = decoded.user;
       next();

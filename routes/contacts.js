@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     res.json(contacts);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).json({err: {msg: 'server error'}});
   }
 });
 
@@ -35,9 +35,9 @@ router.post(
   ],
   async (req, res) => {
     //check errors from validation
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(400).json({ err: result.array() });
     }
 
     //save to database and send response to client
@@ -54,7 +54,7 @@ router.post(
       res.json(contact);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).json({err: {msg: 'server error'}});
     }
   }
 );
@@ -68,10 +68,10 @@ router.post(
 router.put('/:id', async (req, res) => {
   try {
     let contact = await Contact.findById(req.params.id);
-    if (!contact) return res.status(404).json({ msg: "contact doesn't exist" });
+    if (!contact) return res.status(404).json({err: { msg: "contact doesn't exist" }});
     // Make sure user owns contact
     if (contact.user.toString() !== req.user.id) {
-      return res.status(403).json({ msg: 'Not authorized' });
+      return res.status(403).json({ err: {msg: 'Not authorized' }});
     }
 
     //parse the request and build new contact
@@ -91,7 +91,7 @@ router.put('/:id', async (req, res) => {
     res.json(contact);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).json({err: {msg: 'server error'}});
   }
 });
 
@@ -101,17 +101,17 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     let contact = await Contact.findById(req.params.id);
-    if (!contact) return res.status(404).json({ msg: "contact doesn't exist" });
+    if (!contact) return res.status(404).json({err: { msg: "contact doesn't exist" }});
     // Make sure user owns contact
     if (contact.user.toString() !== req.user.id) {
-      return res.status(403).json({ msg: 'Not authorized' });
+      return res.status(403).json({err: { msg: 'Not authorized' }});
     }
 
     await Contact.findByIdAndRemove(req.params.id);
-    res.json({ msg: 'Contact removed' });
+    res.json({err: { msg: 'Contact removed' }});
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).json({err: {msg: 'server error'}});
   }
 });
 

@@ -32,20 +32,20 @@ router.post(
     check('password', 'Password is required').exists()
   ],
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(400).json({ err: result.array() });
     }
 
     const { email, password } = req.body;
     try {
       let user = await User.findOne({ email });
       //user does not exist
-      if (!user) return res.status(400).json({ msg: 'invalid email' });
+      if (!user) return res.status(400).json({err: {msg: 'user doesn\'t exist' }});
       //user and password do not match
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(401).json({ msg: 'email and password do not match' });
+        return res.status(401).json({err: {msg: 'email and password do not match' }});
       }
       //send JWT back to user
       const payload = {
@@ -66,7 +66,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).json({err: {msg: 'server error' }});
     }
   }
 );
