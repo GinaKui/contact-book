@@ -5,8 +5,8 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../models/User');
-
 const router = express.Router();
+
 // @route     POST api/users
 // @desc      Regiter a user
 // @access    Public
@@ -34,7 +34,7 @@ router.post(
       let user = await User.findOne({ email });
       if (user) return res.status(400).json({ err: {msg: 'User already exists' }});
       
-      //encrypt the user's password and save to database
+      //encrypt the user's password before save to database
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
       user = new User({
@@ -44,7 +44,7 @@ router.post(
       });
       await user.save();
 
-      //send response to client with data payload and json web token
+      //send JWT back to user
       const payload = {
         user: {
           id: user.id

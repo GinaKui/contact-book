@@ -1,8 +1,9 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
 
-const auth = require('../middleware/auth');
 const Contact = require('../models/Contact');
+const auth = require('../middleware/auth');
+const contactMatchUser = require('../middleware/contactMatchUser');
 
 const router = express.Router();
 //all contacts routes require authentication
@@ -59,21 +60,11 @@ router.post(
   }
 );
 
-/**
- * @todo DRY the code by extracting user - contact match
- */
 // @route     PUT api/contacts/:id
 // @desc      Update contact
 // @access    Private
-router.put('/:id', async (req, res) => {
+router.put('/:id', contactMatchUser, async (req, res) => {
   try {
-    let contact = await Contact.findById(req.params.id);
-    if (!contact) return res.status(404).json({err: { msg: "contact doesn't exist" }});
-    // Make sure user owns contact
-    if (contact.user.toString() !== req.user.id) {
-      return res.status(403).json({ err: {msg: 'Not authorized' }});
-    }
-
     //parse the request and build new contact
     const { name, email, phone, type } = req.body;
     const contactFields = {};
@@ -98,15 +89,8 @@ router.put('/:id', async (req, res) => {
 // @route     DELETE api/contacts/:id
 // @desc      Delete contact
 // @access    Private
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', contactMatchUser, async (req, res) => {
   try {
-    let contact = await Contact.findById(req.params.id);
-    if (!contact) return res.status(404).json({err: { msg: "contact doesn't exist" }});
-    // Make sure user owns contact
-    if (contact.user.toString() !== req.user.id) {
-      return res.status(403).json({err: { msg: 'Not authorized' }});
-    }
-
     await Contact.findByIdAndRemove(req.params.id);
     res.json({err: { msg: 'Contact removed' }});
   } catch (err) {
