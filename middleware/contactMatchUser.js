@@ -13,4 +13,6 @@ const contactMatchUser = async (req, res, next) => {
     console.error(err.message);
     res.status(500).json({err: {msg: 'server error'}});
   }
-}
+};
+
+module.exports = contactMatchUser;
